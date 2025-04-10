@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import logout
+from users.tasks import send_email_task
 
 # Create your views here.
 
@@ -20,7 +21,12 @@ class RegisterView(View):
     def post(self,request):
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            send_email_task.delay(
+                subject = 'Welcome to our Web-site',
+                message = "Thank you for registering use",
+                recipient_list = [user.email]
+            )
             return redirect('login')
         else:
             context = {
@@ -41,6 +47,11 @@ class LoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                send_email_task.delay(
+                    subject="Login Successful",
+                    message=f"Hi {user.username}, you have logged in successfully.",
+                    recipient_list=[user.email]
+                )
                 return redirect('home')
             else:
                 return render(request, 'registration/login.html', {
@@ -71,6 +82,11 @@ class PasswordChangeView(View):
             user.set_password(new_password)
             user.save()
             update_session_auth_hash(request,user)
+            send_email_task.delay(
+                subject="Password Changed Successfully",
+                message="Your password has been successfully changed.",
+                recipient_list=[user.email]
+            )
             messages.success(request,"Parolingiz muvaffaqiyatli o'zgartirildi")
             return redirect('password_change_done')
         context = {
