@@ -1,7 +1,25 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block content %}
 
-<h2>Home View</h2>
+  <div class="container my-5 text-center">
+    <h3 class="mb-3 text-success">"O'ZBEKISTONDA KUZATILAYOTGAN MUOMMOLAR"</h3>
+    <p>Bu platforma orqali fuqarolar o‘zlarini qiynayotgan muammolarni davlatga yetkazishlari va ular tez fursatda yechim topishini kutishlari mumkin.</p>
+    <a href="#" class="btn btn-custom mt-2">Ariza qoldirish</a>
+
+    <div class="mt-4">
+      <img src="{% static 'images/main-banner.png' %}" class="img-fluid" alt="Muammolar rasmi" />
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <h4 class="text-center section-title mb-4">Arizalar</h4>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card-box">Bo‘lim 1</div>
+      </div>
+    </div>
+  </div>
 
 {% endblock content %}

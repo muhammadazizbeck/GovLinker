@@ -166,6 +166,17 @@ class PasswordResetCompleteView(View):
     def get(self,request):
         return render(request,'registration/password_reset_complete.html')
     
+
+
+class ProfileView(View):
+    def get(self,request):
+        user = request.user
+        context = {
+            'user':user
+        }
+        return render(request,'main/profile.html',context)
+
+    
         
     
         

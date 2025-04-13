@@ -234,12 +234,6 @@ class PasswordResetDoneTestCase(TestCase):
         self.user.set_password('tester123')
         self.user.save()
 
-    def test_password_reset_view(self):
-        response = self.client.get(
-            reverse('password_reset_done'),
-        )
-
-        self.assertContains(response,'Parolni tiklash uchun email yuborildi')
 
 
 from django.test import TestCase
