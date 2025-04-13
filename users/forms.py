@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
-from users.models import CustomUser
+from .models import CustomUser
 
 
 
