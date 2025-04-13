@@ -8,6 +8,7 @@ class CustomUser(AbstractUser):
     city = models.CharField(max_length=30,null=True,blank=True)
     region = models.CharField(max_length=30,null=True,blank=True)
     countryside = models.CharField(max_length=30,null=True,blank=True)
+    avatar = models.ImageField(upload_to='profile_images/',default='images/ava-img.jpeg')
 
     def __str__(self):
         return self.username

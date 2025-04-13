@@ -57,6 +57,11 @@ class PasswordChangeForm(forms.Form):
         if new_password1 and new_password2 and new_password1 != new_password2:
             raise ValidationError('Parollar mos kelmadi')
         return cleaned_data
+    
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username','first_name','last_name','email','avatar','age','city','region','countryside')
 
 
 

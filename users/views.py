@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login
-from users.forms import RegisterForm,LoginForm,PasswordChangeForm
+from users.forms import RegisterForm,LoginForm,PasswordChangeForm,ProfileUpdateForm
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -11,6 +11,7 @@ from users.models import CustomUser
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -102,7 +103,6 @@ class PasswordChangeDoneView(View):
     def get(self,request):
         return render(request,'registration/password_change_done.html')
     
-
 class PasswordResetView(View):
     def get(self,request):
         return render(request,'registration/password_reset.html')
@@ -124,8 +124,7 @@ class PasswordResetView(View):
 
 class PasswordResetDoneView(View):
     def get(self,request):
-        return render(request,'registration/password_reset_done.html')
-    
+        return render(request,'registration/password_reset_done.html')  
 
 class PasswordResetConfirmView(View):
     def get(self,request,uidb64,token):
@@ -161,20 +160,37 @@ class PasswordResetConfirmView(View):
             messages.error(request,'Havola yaroqsiz yoki eskirgan')
             return redirect('password_reset')
         
-
 class PasswordResetCompleteView(View):
     def get(self,request):
         return render(request,'registration/password_reset_complete.html')
     
-
-
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin,View):
     def get(self,request):
         user = request.user
         context = {
             'user':user
         }
         return render(request,'main/profile.html',context)
+    
+
+class ProfileUpdateView(View):
+    def get(self,request):
+        form = ProfileUpdateForm(instance=request.user)
+        context = {
+            'form':form
+        }
+        return render(request,'main/profile_update.html',context)
+    
+
+    def post(self,request):
+        form = ProfileUpdateForm(request.POST,request.FILES,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        return render(request,'main/profile_update.html')
+    
+    
+        
 
     
         
