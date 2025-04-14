@@ -6,20 +6,60 @@
   <div class="container my-5 text-center">
     <h3 class="mb-3 text-success">"O'ZBEKISTONDA KUZATILAYOTGAN MUOMMOLAR"</h3>
     <p>Bu platforma orqali fuqarolar o‘zlarini qiynayotgan muammolarni davlatga yetkazishlari va ular tez fursatda yechim topishini kutishlari mumkin.</p>
-    <a href="#" class="btn btn-custom mt-2">Ariza qoldirish</a>
-
     <div class="mt-4">
       <img src="{% static 'images/main-banner.png' %}" class="img-fluid" alt="Muammolar rasmi" />
     </div>
   </div>
 
-  <div class="container my-5">
-    <h4 class="text-center section-title mb-4">Arizalar</h4>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card-box">Bo‘lim 1</div>
-      </div>
+  <div class="container mt-5">
+    <h2 class="mb-4">Sohalar bo‘yicha taklif/shikoyatlar</h2>
+
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow hover-effect">
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" class="card-img-top" alt="Surat">
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ category.name }}</h5>
+
+                        <a href="#" class="btn btn-primary">Tashrif buyurish</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-  </div>
+</div>
+
+<style>
+    .hover-effect {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .hover-effect:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+</style>
 
 {% endblock content %}

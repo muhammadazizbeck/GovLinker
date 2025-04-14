@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     #internal
     'users',
     'main',
+    'suggestion',
 
     #external
     'crispy_forms', 
