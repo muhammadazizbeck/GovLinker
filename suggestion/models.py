@@ -48,3 +48,5 @@ class ComplaintImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.complaint.title}"
+
+        ##54f
