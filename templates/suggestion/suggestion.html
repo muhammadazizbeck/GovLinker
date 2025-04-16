@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+{% for suggestion in suggestions %}
+<div class="container py-5 d-flex justify-content-center">
+    <div class="card hover-card" style="width: 18rem;">
+      <img src="{{suggestion.image.url}}" class="card-img-top" alt="Card Image">
+      <div class="card-body">
+        <h5 class="card-title">Card sarlavhasi</h5>
+        <p class="card-text">Bu yerda kartaning qisqacha tavsifi bo'ladi. Juda foydali va chiroyli!</p>
+        <a href="#" class="btn btn-primary">Ko‘proq o‘qish</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock content %}
