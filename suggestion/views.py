@@ -4,15 +4,17 @@ from django.views import View
 
 # Create your views here.
 
-class SuggestionComplaintView(View):
+class CategoryDetailView(View):
     def get(self,request,category_id):
         category = get_object_or_404(Category,id=category_id)
         suggestions = ComplaintSuggestion.objects.filter(category=category)
         context = {
-            'suggestions':suggestions
+            'suggestions':suggestions,
+            'category':category
         }
-        return render(request,'suggestion/suggestion.html' \
-        '')
+        return render(request,'suggestion/category_detail.html',context)
+    
+
 
 
         

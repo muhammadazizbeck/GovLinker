@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('',views.SuggestionComplaintView.as_view(),name='suggestions')
+    path('category/<int:category_id>/',views.CategoryDetailView.as_view(),name='category_detail')
 ]

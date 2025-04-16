@@ -1,0 +1,96 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<style>
+  .hover-shadow {
+    transition: box-shadow 0.3s ease;
+  }
+  .hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+</style>
+
+
+<div class="container py-5">
+  <h2 class="mb-4 text-center">{{ category.name }} ga tegishli takliflar</h2>
+
+  {% if suggestions %}
+    <div class="row">
+      {% for suggestion in suggestions %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm hover-shadow">
+            
+            {% if suggestion.images.all %}
+              <div id="carousel{{ suggestion.id }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  {% for img in suggestion.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <img src="{{ img.image.url }}" class="d-block w-100 rounded-top" style="max-height: 300px; object-fit: cover;" alt="Image">
+                    </div>
+                  {% endfor %}
+                </div>
+                {% if suggestion.images.count > 1 %}
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ suggestion.id }}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ suggestion.id }}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <div class="card-body">
+              <h5 class="card-title">{{ suggestion.title }}</h5>
+              <p class="card-text">{{ suggestion.body|truncatewords:25 }}</p>
+            
+              <!-- STATUS BADGE -->
+              <p>
+                <span class="badge 
+                  {% if suggestion.status == 'new' %}bg-primary
+                  {% elif suggestion.status == 'in_progress' %}bg-warning text-dark
+                  {% elif suggestion.status == 'resolved' %}bg-success
+                  {% endif %}">
+                  {{ suggestion.get_status_display }}
+                </span>
+              </p>
+            
+              <!-- INFO LIST -->
+              <ul class="list-unstyled small text-muted mt-2">
+                <li><strong>Yuboruvchi:</strong> {{ suggestion.sender.get_full_name|default:suggestion.sender.username }}</li>
+                {% if suggestion.organization %}
+                  <li><strong>Kimga:</strong> {{ suggestion.organization.name }}</li>
+                {% endif %}
+                <li><strong>Yuborilgan:</strong> {{ suggestion.created_at|date:"d M Y, H:i" }}</li>
+              </ul>
+            
+              <!-- 🔘 ACTION BUTTONS -->
+              <div class="mt-3 d-flex justify-content-between">
+                <!-- Comment -->
+                <a href="#" class="btn btn-outline-primary btn-sm">
+                  💬 Izoh qoldirish
+                </a>
+            
+                <!-- Like / Vote -->
+                <form method="POST" action="#">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-success btn-sm">
+                    👍 Qo‘llab-quvvatlash
+                  </button>
+                </form>
+              </div>
+            
+            </div>
+            
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted text-center">Bu kategoriya uchun hali takliflar mavjud emas.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+
