@@ -38,6 +38,9 @@ class ComplaintSuggestion(models.Model):
     sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    views = models.PositiveIntegerField(default=0)
+    supports = models.PositiveIntegerField(default=0)
+
 
     def __str__(self):
         return self.title
@@ -54,6 +57,22 @@ class Response(models.Model):
     responder = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='responses')
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class SuggestionView(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    suggestion = models.ForeignKey(ComplaintSuggestion, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'suggestion')
+
+
+class SuggestionSupport(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    suggestion = models.ForeignKey(ComplaintSuggestion, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'suggestion')
 
 
         

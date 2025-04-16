@@ -64,25 +64,24 @@
                 {% endif %}
                 <li><strong>Yuborilgan:</strong> {{ suggestion.created_at|date:"d M Y, H:i" }}</li>
               </ul>
-            
+
+
               <!-- 🔘 ACTION BUTTONS -->
               <div class="mt-3 d-flex justify-content-between">
-                <!-- Comment -->
-                <a href="#" class="btn btn-outline-primary btn-sm">
-                  💬 Izoh qoldirish
-                </a>
-            
+                <!-- Views -->
+                <span class="text-muted small mt-1">
+                  👁 {{ suggestion.views }} marta ko‘rilgan
+                </span>
+
                 <!-- Like / Vote -->
-                <form method="POST" action="#">
+                <form method="POST" action="{% url 'support_suggestion' suggestion.pk %}">
                   {% csrf_token %}
                   <button type="submit" class="btn btn-outline-success btn-sm">
-                    👍 Qo‘llab-quvvatlash
+                    👍 Qo‘llab-quvvatlash ({{ suggestion.supports }})
                   </button>
                 </form>
               </div>
-            
             </div>
-            
           </div>
         </div>
       {% endfor %}
