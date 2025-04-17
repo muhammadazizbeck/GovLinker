@@ -36,7 +36,6 @@ def support_suggestion(request, suggestion_id):
 
 def some_view(request, suggestion_id):
     suggestion = get_object_or_404(ComplaintSuggestion, id=suggestion_id)
-
     if request.user.is_authenticated:
         obj, created = SuggestionView.objects.get_or_create(user=request.user, suggestion=suggestion)
         if created:
@@ -45,7 +44,7 @@ def some_view(request, suggestion_id):
 
 
     
-
+#sfgf
 
 
         
