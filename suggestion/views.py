@@ -44,10 +44,9 @@ def some_view(request, suggestion_id):
 
 
     
-#sfgfasfffffr
-#ghgh
-#ghdg
 
+
+#first touchable niner
         
 
 
